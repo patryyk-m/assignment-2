@@ -52,6 +52,13 @@ with tf.device('/gpu:0'):
     train_ds = train_ds.prefetch(buffer_size=AUTOTUNE)
     val_ds = val_ds.prefetch(buffer_size=AUTOTUNE)
     test_ds = test_ds.prefetch(buffer_size=AUTOTUNE)
+
+    data_augmentation = tf.keras.Sequential([
+        tf.keras.layers.RandomFlip("horizontal"),
+        tf.keras.layers.RandomRotation(0.05),
+        tf.keras.layers.RandomZoom(0.1),
+        tf.keras.layers.RandomContrast(0.1),
+    ])
     
     plt.figure(figsize=(10, 10))
     for images, labels in train_ds.take(2):
@@ -60,7 +67,7 @@ with tf.device('/gpu:0'):
             plt.imshow(images[i].numpy().astype("uint8"))
             plt.title(class_names[labels[i].numpy()])
             plt.axis("off")
-    plt.savefig("run2_samples.png", bbox_inches="tight")
+    plt.savefig("run3_samples.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
@@ -68,28 +75,29 @@ with tf.device('/gpu:0'):
     #create model
     model = tf.keras.models.Sequential([
         tf.keras.layers.Input(shape=(img_height, img_width, img_channels)),
+        data_augmentation,
         Rescaling(1.0/255),
-        Conv2D(16, (3,3), activation = 'relu'),
-        BatchNormalization(),
-        MaxPooling2D(2,2),
         Conv2D(32, (3,3), activation = 'relu'),
         BatchNormalization(),
         MaxPooling2D(2,2),
-        Conv2D(32, (3,3), activation = 'relu'),
+        Conv2D(64, (3,3), activation = 'relu'),
         BatchNormalization(),
         MaxPooling2D(2,2),
-        Flatten(), # flatten multidimensional outputs into single dimension for input to dense fully connected layers
+        Conv2D(64, (3,3), activation = 'relu'),
+        BatchNormalization(),
+        MaxPooling2D(2,2),
+        tf.keras.layers.GlobalAveragePooling2D(), # reduces each feature map to a single value
         Dense(256, activation = 'relu'),
         BatchNormalization(),
-        Dropout(0.4),
+        Dropout(0.5),
         Dense(num_classes, activation = 'softmax')
     ])
 
     model.compile(loss='sparse_categorical_crossentropy',
-                  optimizer=Adam(),
+                  optimizer=Adam(learning_rate=0.0005),
                   metrics=['accuracy'])
     
-    earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
+    earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=4, restore_best_weights=True)
     save_callback = tf.keras.callbacks.ModelCheckpoint("pneumonia.keras",save_freq='epoch',save_best_only=True)
 
     if fit:
@@ -115,7 +123,7 @@ with tf.device('/gpu:0'):
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
-        plt.savefig("run2_accuracy.png", bbox_inches="tight")
+        plt.savefig("run3_accuracy.png", bbox_inches="tight")
         plt.show(block=False)
         plt.pause(2)
         plt.close()
@@ -129,7 +137,7 @@ with tf.device('/gpu:0'):
             prediction = model.predict(tf.expand_dims(images[i].numpy(),0), verbose=0)#perform a prediction on this image
             plt.title('Actual:' + class_names[labels[i].numpy()]+ '\nPredicted:{} {:.2f}%'.format(class_names[np.argmax(prediction)], 100 * np.max(prediction)))
             plt.axis("off")
-    plt.savefig("run2_predictions.png", bbox_inches="tight")
+    plt.savefig("run3_predictions.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
