@@ -1,6 +1,6 @@
-
-
 from __future__ import print_function
+
+import os
 
 import keras
 import tensorflow as tf
@@ -14,13 +14,14 @@ import numpy as np
 
 batch_size = 12
 num_classes = 3
-epochs = 8
+epochs = 15
 img_width = 128
 img_height = 128
 img_channels = 3
 fit = True #make fit false if you do not want to train the network again
-train_dir = 'C:\\Users\\SimonMcLoughlin\\Documents\\research\\datasets\\chest_xray\\train'
-test_dir = 'C:\\Users\\SimonMcLoughlin\\Documents\\research\\datasets\\chest_xray\\test'
+_data_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'chest_xray')
+train_dir = os.path.join(_data_root, 'train')
+test_dir = os.path.join(_data_root, 'test')
 
 with tf.device('/gpu:0'):
     
@@ -46,6 +47,11 @@ with tf.device('/gpu:0'):
     class_names = train_ds.class_names
     print('Class Names: ',class_names)
     num_classes = len(class_names)
+
+    AUTOTUNE = tf.data.AUTOTUNE
+    train_ds = train_ds.prefetch(buffer_size=AUTOTUNE)
+    val_ds = val_ds.prefetch(buffer_size=AUTOTUNE)
+    test_ds = test_ds.prefetch(buffer_size=AUTOTUNE)
     
     plt.figure(figsize=(10, 10))
     for images, labels in train_ds.take(2):
@@ -54,20 +60,28 @@ with tf.device('/gpu:0'):
             plt.imshow(images[i].numpy().astype("uint8"))
             plt.title(class_names[labels[i].numpy()])
             plt.axis("off")
-    plt.show()
+    plt.savefig("run2_samples.png", bbox_inches="tight")
+    plt.show(block=False)
+    plt.pause(2)
+    plt.close()
 
     #create model
     model = tf.keras.models.Sequential([
+        tf.keras.layers.Input(shape=(img_height, img_width, img_channels)),
         Rescaling(1.0/255),
-        Conv2D(16, (3,3), activation = 'relu', input_shape = (img_height,img_width, img_channels)),
+        Conv2D(16, (3,3), activation = 'relu'),
+        BatchNormalization(),
         MaxPooling2D(2,2),
         Conv2D(32, (3,3), activation = 'relu'),
+        BatchNormalization(),
         MaxPooling2D(2,2),
         Conv2D(32, (3,3), activation = 'relu'),
+        BatchNormalization(),
         MaxPooling2D(2,2),
         Flatten(), # flatten multidimensional outputs into single dimension for input to dense fully connected layers
-        Dense(512, activation = 'relu'),
-        Dropout(0.2),
+        Dense(256, activation = 'relu'),
+        BatchNormalization(),
+        Dropout(0.4),
         Dense(num_classes, activation = 'softmax')
     ])
 
@@ -75,7 +89,7 @@ with tf.device('/gpu:0'):
                   optimizer=Adam(),
                   metrics=['accuracy'])
     
-    #earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss',patience=5)
+    earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
     save_callback = tf.keras.callbacks.ModelCheckpoint("pneumonia.keras",save_freq='epoch',save_best_only=True)
 
     if fit:
@@ -83,7 +97,7 @@ with tf.device('/gpu:0'):
             train_ds,
             batch_size=batch_size,
             validation_data=val_ds,
-            callbacks=[save_callback],
+            callbacks=[save_callback, earlystop_callback],
             epochs=epochs)
     else:
         model = tf.keras.models.load_model("pneumonia.keras")
@@ -94,12 +108,17 @@ with tf.device('/gpu:0'):
 
     
     if fit:
+        plt.figure()
         plt.plot(history.history['accuracy'])
         plt.plot(history.history['val_accuracy'])
         plt.title('model accuracy')
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
+        plt.savefig("run2_accuracy.png", bbox_inches="tight")
+        plt.show(block=False)
+        plt.pause(2)
+        plt.close()
         
     test_batch = test_ds.take(1)
     plt.figure(figsize=(10, 10))
@@ -107,7 +126,10 @@ with tf.device('/gpu:0'):
         for i in range(6):
             ax = plt.subplot(2, 3, i + 1)
             plt.imshow(images[i].numpy().astype("uint8"))
-            prediction = model.predict(tf.expand_dims(images[i].numpy(),0))#perform a prediction on this image
+            prediction = model.predict(tf.expand_dims(images[i].numpy(),0), verbose=0)#perform a prediction on this image
             plt.title('Actual:' + class_names[labels[i].numpy()]+ '\nPredicted:{} {:.2f}%'.format(class_names[np.argmax(prediction)], 100 * np.max(prediction)))
             plt.axis("off")
-    plt.show()
+    plt.savefig("run2_predictions.png", bbox_inches="tight")
+    plt.show(block=False)
+    plt.pause(2)
+    plt.close()
