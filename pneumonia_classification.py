@@ -6,7 +6,7 @@ import keras
 import tensorflow as tf
 from keras.datasets import mnist
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Rescaling, BatchNormalization
+from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D, Rescaling, BatchNormalization, GlobalAveragePooling2D
 from keras.optimizers import RMSprop,Adam
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,7 +14,7 @@ import numpy as np
 
 batch_size = 12
 num_classes = 3
-epochs = 20
+epochs = 12
 img_width = 128
 img_height = 128
 img_channels = 3
@@ -54,7 +54,7 @@ with tf.device('/gpu:0'):
     test_ds = test_ds.prefetch(buffer_size=AUTOTUNE)
 
     data_augmentation = tf.keras.Sequential([
-        tf.keras.layers.RandomRotation(0.03),
+        tf.keras.layers.RandomRotation(0.02),
         tf.keras.layers.RandomZoom(0.05),
         tf.keras.layers.RandomContrast(0.05),
     ])
@@ -66,37 +66,36 @@ with tf.device('/gpu:0'):
             plt.imshow(images[i].numpy().astype("uint8"))
             plt.title(class_names[labels[i].numpy()])
             plt.axis("off")
-    plt.savefig("run4_samples.png", bbox_inches="tight")
+    plt.savefig("run5_samples.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
+
+    base_model = tf.keras.applications.MobileNetV2(
+        input_shape=(img_height, img_width, img_channels),
+        include_top=False,
+        weights='imagenet'
+    )
+    base_model.trainable = False
 
     #create model
     model = tf.keras.models.Sequential([
         tf.keras.layers.Input(shape=(img_height, img_width, img_channels)),
         data_augmentation,
-        Rescaling(1.0/255),
-        Conv2D(32, (3,3), activation = 'relu'),
-        BatchNormalization(),
-        MaxPooling2D(2,2),
-        Conv2D(64, (3,3), activation = 'relu'),
-        BatchNormalization(),
-        MaxPooling2D(2,2),
-        Conv2D(128, (3,3), activation = 'relu'),
-        BatchNormalization(),
-        MaxPooling2D(2,2),
-        tf.keras.layers.GlobalAveragePooling2D(), # reduces each feature map to a single value
+        tf.keras.layers.Lambda(tf.keras.applications.mobilenet_v2.preprocess_input),
+        base_model,
+        GlobalAveragePooling2D(), # reduces each feature map to a single value
         Dense(128, activation = 'relu'),
-        BatchNormalization(),
         Dropout(0.3),
         Dense(num_classes, activation = 'softmax')
     ])
 
     model.compile(loss='sparse_categorical_crossentropy',
-                  optimizer=Adam(learning_rate=0.0003),
+                  optimizer=Adam(learning_rate=0.0001),
                   metrics=['accuracy'])
     
-    earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
+    earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=4, restore_best_weights=True)
+    reduce_lr_callback = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=2, min_lr=1e-6)
     save_callback = tf.keras.callbacks.ModelCheckpoint("pneumonia.keras",save_freq='epoch',save_best_only=True)
 
     if fit:
@@ -104,7 +103,7 @@ with tf.device('/gpu:0'):
             train_ds,
             batch_size=batch_size,
             validation_data=val_ds,
-            callbacks=[save_callback, earlystop_callback],
+            callbacks=[save_callback, earlystop_callback, reduce_lr_callback],
             epochs=epochs)
     else:
         model = tf.keras.models.load_model("pneumonia.keras")
@@ -122,7 +121,7 @@ with tf.device('/gpu:0'):
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
-        plt.savefig("run4_accuracy.png", bbox_inches="tight")
+        plt.savefig("run5_accuracy.png", bbox_inches="tight")
         plt.show(block=False)
         plt.pause(2)
         plt.close()
@@ -136,7 +135,7 @@ with tf.device('/gpu:0'):
             prediction = model.predict(tf.expand_dims(images[i].numpy(),0), verbose=0)#perform a prediction on this image
             plt.title('Actual:' + class_names[labels[i].numpy()]+ '\nPredicted:{} {:.2f}%'.format(class_names[np.argmax(prediction)], 100 * np.max(prediction)))
             plt.axis("off")
-    plt.savefig("run4_predictions.png", bbox_inches="tight")
+    plt.savefig("run5_predictions.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
