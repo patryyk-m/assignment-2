@@ -14,7 +14,7 @@ import numpy as np
 
 batch_size = 12
 num_classes = 3
-epochs = 12
+epochs = 14
 img_width = 128
 img_height = 128
 img_channels = 3
