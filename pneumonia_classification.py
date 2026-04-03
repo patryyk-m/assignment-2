@@ -14,7 +14,7 @@ import numpy as np
 
 batch_size = 12
 num_classes = 3
-epochs = 15
+epochs = 20
 img_width = 128
 img_height = 128
 img_channels = 3
@@ -54,10 +54,9 @@ with tf.device('/gpu:0'):
     test_ds = test_ds.prefetch(buffer_size=AUTOTUNE)
 
     data_augmentation = tf.keras.Sequential([
-        tf.keras.layers.RandomFlip("horizontal"),
-        tf.keras.layers.RandomRotation(0.05),
-        tf.keras.layers.RandomZoom(0.1),
-        tf.keras.layers.RandomContrast(0.1),
+        tf.keras.layers.RandomRotation(0.03),
+        tf.keras.layers.RandomZoom(0.05),
+        tf.keras.layers.RandomContrast(0.05),
     ])
     
     plt.figure(figsize=(10, 10))
@@ -67,7 +66,7 @@ with tf.device('/gpu:0'):
             plt.imshow(images[i].numpy().astype("uint8"))
             plt.title(class_names[labels[i].numpy()])
             plt.axis("off")
-    plt.savefig("run3_samples.png", bbox_inches="tight")
+    plt.savefig("run4_samples.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
@@ -83,21 +82,21 @@ with tf.device('/gpu:0'):
         Conv2D(64, (3,3), activation = 'relu'),
         BatchNormalization(),
         MaxPooling2D(2,2),
-        Conv2D(64, (3,3), activation = 'relu'),
+        Conv2D(128, (3,3), activation = 'relu'),
         BatchNormalization(),
         MaxPooling2D(2,2),
         tf.keras.layers.GlobalAveragePooling2D(), # reduces each feature map to a single value
-        Dense(256, activation = 'relu'),
+        Dense(128, activation = 'relu'),
         BatchNormalization(),
-        Dropout(0.5),
+        Dropout(0.3),
         Dense(num_classes, activation = 'softmax')
     ])
 
     model.compile(loss='sparse_categorical_crossentropy',
-                  optimizer=Adam(learning_rate=0.0005),
+                  optimizer=Adam(learning_rate=0.0003),
                   metrics=['accuracy'])
     
-    earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=4, restore_best_weights=True)
+    earlystop_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
     save_callback = tf.keras.callbacks.ModelCheckpoint("pneumonia.keras",save_freq='epoch',save_best_only=True)
 
     if fit:
@@ -123,7 +122,7 @@ with tf.device('/gpu:0'):
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
-        plt.savefig("run3_accuracy.png", bbox_inches="tight")
+        plt.savefig("run4_accuracy.png", bbox_inches="tight")
         plt.show(block=False)
         plt.pause(2)
         plt.close()
@@ -137,7 +136,7 @@ with tf.device('/gpu:0'):
             prediction = model.predict(tf.expand_dims(images[i].numpy(),0), verbose=0)#perform a prediction on this image
             plt.title('Actual:' + class_names[labels[i].numpy()]+ '\nPredicted:{} {:.2f}%'.format(class_names[np.argmax(prediction)], 100 * np.max(prediction)))
             plt.axis("off")
-    plt.savefig("run3_predictions.png", bbox_inches="tight")
+    plt.savefig("run4_predictions.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
