@@ -18,7 +18,7 @@ epochs = 14
 img_width = 128
 img_height = 128
 img_channels = 3
-fit = True #make fit false if you do not want to train the network again
+fit = False
 _data_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'chest_xray')
 train_dir = os.path.join(_data_root, 'train')
 test_dir = os.path.join(_data_root, 'test')
@@ -66,7 +66,7 @@ with tf.device('/gpu:0'):
             plt.imshow(images[i].numpy().astype("uint8"))
             plt.title(class_names[labels[i].numpy()])
             plt.axis("off")
-    plt.savefig("run5_samples.png", bbox_inches="tight")
+    plt.savefig("run7_samples.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
@@ -82,7 +82,8 @@ with tf.device('/gpu:0'):
     model = tf.keras.models.Sequential([
         tf.keras.layers.Input(shape=(img_height, img_width, img_channels)),
         data_augmentation,
-        tf.keras.layers.Lambda(tf.keras.applications.mobilenet_v2.preprocess_input),
+        # Same as mobilenet preprocess
+        Rescaling(scale=1.0 / 127.5, offset=-1.0),
         base_model,
         GlobalAveragePooling2D(), # reduces each feature map to a single value
         Dense(128, activation = 'relu'),
@@ -106,7 +107,18 @@ with tf.device('/gpu:0'):
             callbacks=[save_callback, earlystop_callback, reduce_lr_callback],
             epochs=epochs)
     else:
-        model = tf.keras.models.load_model("pneumonia.keras")
+        try:
+            model = tf.keras.models.load_model("pneumonia.keras")
+        except Exception:
+            try:
+                model = tf.keras.models.load_model(
+                    "pneumonia.keras",
+                    custom_objects={
+                        "preprocess_input": tf.keras.applications.mobilenet_v2.preprocess_input,
+                    },
+                )
+            except Exception as e:
+                raise RuntimeError("Error") from e
 
     #if shuffle=True when creating the dataset, samples will be chosen randomly   
     score = model.evaluate(test_ds, batch_size=batch_size)
@@ -121,7 +133,7 @@ with tf.device('/gpu:0'):
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
-        plt.savefig("run5_accuracy.png", bbox_inches="tight")
+        plt.savefig("run7_accuracy.png", bbox_inches="tight")
         plt.show(block=False)
         plt.pause(2)
         plt.close()
@@ -135,7 +147,7 @@ with tf.device('/gpu:0'):
             prediction = model.predict(tf.expand_dims(images[i].numpy(),0), verbose=0)#perform a prediction on this image
             plt.title('Actual:' + class_names[labels[i].numpy()]+ '\nPredicted:{} {:.2f}%'.format(class_names[np.argmax(prediction)], 100 * np.max(prediction)))
             plt.axis("off")
-    plt.savefig("run5_predictions.png", bbox_inches="tight")
+    plt.savefig("run7_predictions.png", bbox_inches="tight")
     plt.show(block=False)
     plt.pause(2)
     plt.close()
