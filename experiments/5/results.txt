@@ -1,0 +1,44 @@
+(venv) PS C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2> python -u "c:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2\pneumonia_classification.py"
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775210478.402782   78140 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775210482.645838   78140 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1775210483.706855   78140 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Found 5419 files belonging to 3 classes.
+Using 4336 files for training.
+Using 1083 files for validation.
+Found 437 files belonging to 3 classes.
+Class Names:  ['BACTERIAL', 'NORMAL', 'VIRAL']
+Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/mobilenet_v2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_128_no_top.h5
+9406464/9406464 ━━━━━━━━━━━━━━━━━━━━ 1s 0us/step 
+WARNING:tensorflow:From C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2\venv\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+Epoch 1/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 18s 44ms/step - accuracy: 0.6711 - loss: 0.7451 - val_accuracy: 0.7415 - val_loss: 0.6290 - learning_rate: 1.0000e-04
+Epoch 2/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 18s 50ms/step - accuracy: 0.7447 - loss: 0.5929 - val_accuracy: 0.7470 - val_loss: 0.5979 - learning_rate: 1.0000e-04
+Epoch 3/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 34s 94ms/step - accuracy: 0.7682 - loss: 0.5621 - val_accuracy: 0.7701 - val_loss: 0.5673 - learning_rate: 1.0000e-04
+Epoch 4/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 34s 95ms/step - accuracy: 0.7691 - loss: 0.5458 - val_accuracy: 0.7701 - val_loss: 0.5593 - learning_rate: 1.0000e-04
+Epoch 5/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 21s 58ms/step - accuracy: 0.7740 - loss: 0.5311 - val_accuracy: 0.7719 - val_loss: 0.5516 - learning_rate: 1.0000e-04
+Epoch 6/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 21s 59ms/step - accuracy: 0.7904 - loss: 0.5065 - val_accuracy: 0.7775 - val_loss: 0.5566 - learning_rate: 1.0000e-04
+Epoch 7/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 24s 65ms/step - accuracy: 0.7844 - loss: 0.5039 - val_accuracy: 0.7719 - val_loss: 0.5577 - learning_rate: 1.0000e-04
+Epoch 8/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 23s 62ms/step - accuracy: 0.7961 - loss: 0.4870 - val_accuracy: 0.7830 - val_loss: 0.5419 - learning_rate: 5.0000e-05
+Epoch 9/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 22s 60ms/step - accuracy: 0.8012 - loss: 0.4774 - val_accuracy: 0.7858 - val_loss: 0.5371 - learning_rate: 5.0000e-05
+Epoch 10/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 24s 65ms/step - accuracy: 0.8017 - loss: 0.4702 - val_accuracy: 0.7830 - val_loss: 0.5341 - learning_rate: 5.0000e-05
+Epoch 11/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 23s 63ms/step - accuracy: 0.8097 - loss: 0.4720 - val_accuracy: 0.7849 - val_loss: 0.5335 - learning_rate: 5.0000e-05
+Epoch 12/12
+362/362 ━━━━━━━━━━━━━━━━━━━━ 22s 60ms/step - accuracy: 0.8063 - loss: 0.4659 - val_accuracy: 0.7839 - val_loss: 0.5382 - learning_rate: 5.0000e-05
+37/37 ━━━━━━━━━━━━━━━━━━━━ 2s 45ms/step - accuracy: 0.7757 - loss: 0.5470 
+Test accuracy: 0.7757437229156494
+(venv) PS C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2> 

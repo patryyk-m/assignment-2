@@ -1,0 +1,32 @@
+(venv) PS C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2> python -u "c:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2\pneumonia_classification.py"
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775144988.362262   27904 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775144989.826255   27904 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1775144990.346393   27904 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Found 5419 files belonging to 3 classes.
+Using 4336 files for training.
+Using 1083 files for validation.
+Found 437 files belonging to 3 classes.
+Class Names:  ['BACTERIAL', 'NORMAL', 'VIRAL']
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+Epoch 1/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 29s 75ms/step - accuracy: 0.5789 - loss: 1.0779 - val_accuracy: 0.4700 - val_loss: 1.6745
+Epoch 2/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 42s 115ms/step - accuracy: 0.6511 - loss: 0.8577 - val_accuracy: 0.3749 - val_loss: 3.0150
+Epoch 3/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 33s 92ms/step - accuracy: 0.6614 - loss: 0.8073 - val_accuracy: 0.5919 - val_loss: 1.2042
+Epoch 4/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 30s 84ms/step - accuracy: 0.6891 - loss: 0.7571 - val_accuracy: 0.6971 - val_loss: 0.7975
+Epoch 5/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 30s 84ms/step - accuracy: 0.6960 - loss: 0.7184 - val_accuracy: 0.5023 - val_loss: 1.7518
+Epoch 6/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 30s 82ms/step - accuracy: 0.7196 - loss: 0.6778 - val_accuracy: 0.5402 - val_loss: 1.0353
+Epoch 7/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 30s 83ms/step - accuracy: 0.7269 - loss: 0.6399 - val_accuracy: 0.2696 - val_loss: 2.0125
+Epoch 8/15
+362/362 ━━━━━━━━━━━━━━━━━━━━ 30s 83ms/step - accuracy: 0.7470 - loss: 0.6137 - val_accuracy: 0.5531 - val_loss: 1.4430
+37/37 ━━━━━━━━━━━━━━━━━━━━ 1s 19ms/step - accuracy: 0.7117 - loss: 0.7635
+Test accuracy: 0.711670458316803
+(venv) PS C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2> 

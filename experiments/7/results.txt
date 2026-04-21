@@ -1,0 +1,31 @@
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+Epoch 1/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m22s[0m 54ms/step - accuracy: 0.6610 - loss: 0.7576 - val_accuracy: 0.7424 - val_loss: 0.6294 - learning_rate: 1.0000e-04
+Epoch 2/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m20s[0m 55ms/step - accuracy: 0.7452 - loss: 0.5977 - val_accuracy: 0.7110 - val_loss: 0.6312 - learning_rate: 1.0000e-04
+Epoch 3/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m41s[0m 114ms/step - accuracy: 0.7629 - loss: 0.5537 - val_accuracy: 0.7470 - val_loss: 0.5927 - learning_rate: 1.0000e-04
+Epoch 4/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m35s[0m 97ms/step - accuracy: 0.7733 - loss: 0.5322 - val_accuracy: 0.7553 - val_loss: 0.5796 - learning_rate: 1.0000e-04
+Epoch 5/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m22s[0m 60ms/step - accuracy: 0.7804 - loss: 0.5208 - val_accuracy: 0.7581 - val_loss: 0.5651 - learning_rate: 1.0000e-04
+Epoch 6/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m22s[0m 62ms/step - accuracy: 0.7855 - loss: 0.5069 - val_accuracy: 0.7636 - val_loss: 0.5616 - learning_rate: 1.0000e-04
+Epoch 7/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m22s[0m 61ms/step - accuracy: 0.7952 - loss: 0.4902 - val_accuracy: 0.7729 - val_loss: 0.5495 - learning_rate: 1.0000e-04
+Epoch 8/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m25s[0m 70ms/step - accuracy: 0.7947 - loss: 0.4857 - val_accuracy: 0.7590 - val_loss: 0.5636 - learning_rate: 1.0000e-04
+Epoch 9/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m36s[0m 98ms/step - accuracy: 0.8017 - loss: 0.4716 - val_accuracy: 0.7572 - val_loss: 0.5767 - learning_rate: 1.0000e-04
+Epoch 10/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m24s[0m 67ms/step - accuracy: 0.8003 - loss: 0.4675 - val_accuracy: 0.7747 - val_loss: 0.5553 - learning_rate: 5.0000e-05
+Epoch 11/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m25s[0m 70ms/step - accuracy: 0.8049 - loss: 0.4608 - val_accuracy: 0.7738 - val_loss: 0.5426 - learning_rate: 5.0000e-05
+Epoch 12/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m29s[0m 79ms/step - accuracy: 0.8070 - loss: 0.4528 - val_accuracy: 0.7738 - val_loss: 0.5349 - learning_rate: 5.0000e-05
+Epoch 13/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m25s[0m 68ms/step - accuracy: 0.8130 - loss: 0.4480 - val_accuracy: 0.7756 - val_loss: 0.5473 - learning_rate: 5.0000e-05
+Epoch 14/14
+[1m362/362[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m28s[0m 78ms/step - accuracy: 0.8157 - loss: 0.4449 - val_accuracy: 0.7802 - val_loss: 0.5318 - learning_rate: 5.0000e-05
+[1m37/37[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m2s[0m 57ms/step - accuracy: 0.7895 - loss: 0.5275
+Test accuracy: 0.7894737124443054

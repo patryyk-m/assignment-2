@@ -1,0 +1,46 @@
+(venv) PS C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2> python -u "c:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2\pneumonia_classification.py"
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775229912.377007   46744 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775229914.207261   46744 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1775229915.590749   46744 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Found 5419 files belonging to 3 classes.
+Using 4336 files for training.
+Using 1083 files for validation.
+Found 437 files belonging to 3 classes.
+Class Names:  ['BACTERIAL', 'NORMAL', 'VIRAL']
+WARNING:tensorflow:From C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2\venv\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+Epoch 1/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 22s 53ms/step - accuracy: 0.6628 - loss: 0.7787 - val_accuracy: 0.7350 - val_loss: 0.6333 - learning_rate: 1.0000e-04
+Epoch 2/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 30s 82ms/step - accuracy: 0.7512 - loss: 0.5889 - val_accuracy: 0.7756 - val_loss: 0.5793 - learning_rate: 1.0000e-04
+Epoch 3/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 60s 135ms/step - accuracy: 0.7608 - loss: 0.5673 - val_accuracy: 0.7775 - val_loss: 0.5576 - learning_rate: 1.0000e-04
+Epoch 4/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 35s 95ms/step - accuracy: 0.7726 - loss: 0.5382 - val_accuracy: 0.7830 - val_loss: 0.5473 - learning_rate: 1.0000e-04
+Epoch 5/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 44s 120ms/step - accuracy: 0.7809 - loss: 0.5239 - val_accuracy: 0.7821 - val_loss: 0.5557 - learning_rate: 1.0000e-04
+Epoch 6/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 35s 97ms/step - accuracy: 0.7897 - loss: 0.5023 - val_accuracy: 0.7858 - val_loss: 0.5462 - learning_rate: 1.0000e-04
+Epoch 7/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 37s 103ms/step - accuracy: 0.7968 - loss: 0.4853 - val_accuracy: 0.7830 - val_loss: 0.5417 - learning_rate: 1.0000e-04
+Epoch 8/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 31s 86ms/step - accuracy: 0.7920 - loss: 0.4879 - val_accuracy: 0.7775 - val_loss: 0.5377 - learning_rate: 1.0000e-04
+Epoch 9/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 41s 114ms/step - accuracy: 0.8037 - loss: 0.4740 - val_accuracy: 0.7812 - val_loss: 0.5417 - learning_rate: 1.0000e-04
+Epoch 10/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 29s 80ms/step - accuracy: 0.8000 - loss: 0.4766 - val_accuracy: 0.7765 - val_loss: 0.5626 - learning_rate: 1.0000e-04
+Epoch 11/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 28s 78ms/step - accuracy: 0.8113 - loss: 0.4574 - val_accuracy: 0.7747 - val_loss: 0.5393 - learning_rate: 5.0000e-05
+Epoch 12/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 37s 101ms/step - accuracy: 0.8100 - loss: 0.4504 - val_accuracy: 0.7802 - val_loss: 0.5328 - learning_rate: 5.0000e-05
+Epoch 13/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 31s 85ms/step - accuracy: 0.8125 - loss: 0.4557 - val_accuracy: 0.7664 - val_loss: 0.5399 - learning_rate: 5.0000e-05
+Epoch 14/14
+362/362 ━━━━━━━━━━━━━━━━━━━━ 38s 106ms/step - accuracy: 0.8180 - loss: 0.4466 - val_accuracy: 0.7895 - val_loss: 0.5243 - learning_rate: 5.0000e-05
+37/37 ━━━━━━━━━━━━━━━━━━━━ 2s 54ms/step - accuracy: 0.7918 - loss: 0.5118
+Test accuracy: 0.7917619943618774
+(venv) PS C:\Users\Patryk\Documents\GitHub\comp-vis\assignment-2> 
